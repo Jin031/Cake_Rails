@@ -14,7 +14,10 @@ Rails.application.routes.draw do
     root to: "homes#top"
  end
 
- namespace :public do
+   scope module: :public do
+   root to: "homes#top"
+   get '/about' => 'homes#about', as: 'about'
+   resources :items, only: [:index, :show]
    resources :customers, only: [:show, :edit, :update, :withdraw, :unsubscribe]
  end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
