@@ -10,6 +10,94 @@
   </head>
 
   <body>
-    <%= yield %>
+    <header>
+     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="/"><span></span></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav ml-auto">
+           <% if customer_signed_in? %>
+
+         <li>
+           マイページ
+         </li>
+         <li>
+              商品一覧
+         </li>
+         <li>
+              カート
+         </li>
+         <li>
+          <%= link_to destroy_customer_session_path, method: :delete do %>
+            ログアウト
+          <% end %>
+          </li>
+           <% elsif  admin_signed_in? %>
+
+          <li>
+           <%= link_to admin_items_path do %>
+              商品一覧
+              <% end %>
+          </li>
+          <li>
+           会員一覧
+          </li>
+          <li>
+           注文履歴一覧
+          </li>
+          <li>
+            <%= link_to admin_genres_path do %>
+            ジャンル一覧
+             <% end %>
+          </li>
+          <li>
+           <%= link_to destroy_admin_session_path, method: :delete do %>
+            ログアウト
+             <% end %>
+          </li>
+          <% else %>
+          <li>
+           <%= link_to about_path do %>
+              About
+                <% end %>
+          </li>
+          </li>
+          <li>
+              商品一覧
+          </li>
+          <li>
+           <%= link_to new_customer_registration_path do %>
+              新規登録
+              <% end %>
+          </li>
+          <li>
+           <%= link_to new_customer_session_path do %>
+            ログイン
+            <% end %>
+          </li>
+           <% end %>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+<main>
+ <div class="container">
+ <%= yield %>
+ </div>
+</main>
+    <footer>
+  <div class="container mt-5">
+  	<div class="row">
+    	<div class="mx-auto">
+    	</div>
+    </div>
+  </div>
+</footer>
   </body>
 </html>
+
+

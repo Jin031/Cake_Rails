@@ -1,2 +1,3 @@
 class OrderDitail < ApplicationRecord
+
 end
