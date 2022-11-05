@@ -19,7 +19,12 @@ Rails.application.routes.draw do
     get 'withdraw'
     patch 'unsubscribe'
    end
+    end
+   resources :cart_items, only: [:index, :create, :update, :destroy] do
+   collection do
+   delete 'destroy_all'
   end
+   end
    resources :addresses, only: [:index, :create, :edit, :update, :destroy]
  end
 
