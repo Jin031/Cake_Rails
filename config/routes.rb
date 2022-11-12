@@ -28,7 +28,7 @@ Rails.application.routes.draw do
     resources :orders, only: [:index, :create, :new, :show] do
    collection do
    get 'complete'
-   post 'comfirm'
+   post 'confirm'
    end
    end
    resources :addresses, only: [:index, :create, :edit, :update, :destroy]
