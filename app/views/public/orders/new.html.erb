@@ -23,8 +23,7 @@
   </div>
 
 <p><%= f.radio_button :select_address, 1 %> 登録済み住所から選択</p>
- 　<%= f.select :address_id, options_from_collection_for_select(Address.all, :id, :address_display) %>
-
+<%= f.select :address_id, options_from_collection_for_select(Address.all, :id, :address_display) %>
 
 <p><%= f.radio_button :select_address, 2 %> 新しいお届け先</p>
   <div class="row">
@@ -51,8 +50,8 @@
       <%= f.text_field :name %>
      </div>
     </div>
-　　<div class="text-center">
-    <%= f.submit '確認画面へ進む',class:"btn btn-primary" %>
+    <div class="text-center">
+     <%= f.submit '確認画面へ進む',class:"btn btn-primary" %>
     </div>
   <% end %>
   </div>

@@ -1,0 +1,72 @@
+<h4>注文履歴詳細</h4>
+<div class="container">
+ <div class="row">
+  <div class="col-md-7">
+    <table class="table table-bordered">
+     <thead></thead>
+      <tbody>
+        <P>注文情報</P>
+       <tr>
+          <th>注文日</th>
+          <td><%= @order.created_at.strftime('%Y/%m/%d') %></td>
+       </tr>
+       <tr>
+          <th>配送先</th>
+          <td>〒<%= @order.postal_code %>
+                <%= @order.address %>
+                <%= @order.name %>
+          </td>
+        </tr>
+        <tr>
+          <th>支払い方法</th>
+          <td><%=Order.payment_methods_i18n[@order.payment_method] %></td>
+        </tr>
+        <tr>
+          <th>ステータス</th>
+          <td><%= @order.status %></td>
+       </tr>
+     </tbody>
+    </table>
+   </div>
+   <div class="col-md-3">
+    <table class="table table-bordered">
+     <tbody>
+       <P>請求情報</P>
+      <tr>
+       <td>商品合計</td>
+       <td><%= @total %></td>
+      </tr>
+      <tr>
+       <td>送料</td>
+       <td><%= @order.delivery_charge %></td>
+
+      </tr>
+      <tr>
+       <td>請求金額</td>
+       <td><%= @total + @order.delivery_charge %></td>
+      </tr>
+     </tbody>
+    </table>
+   </div>
+   <div class="col-md-9">
+    <table class="table table-bordered">
+     <tbody>
+       <P>注文内容</P>
+        <th>商品</th>
+        <th>単価(税込)</th>
+        <th>個数</th>
+        <th>小計</th>
+
+         <% @order.order_ditails.each do |ditail| %>
+         <tr>
+          <td><%= ditail.item.name %></td>
+          <td><%= ditail.item.with_tax_price %></td>
+          <td><%= ditail.amount %></td>
+          <td><%= ditail.item.with_tax_price * ditail.amount %></td>
+         </tr>
+         <% end %>
+     </tbody>
+    </table>
+   </div>
+  </div>
+</div>

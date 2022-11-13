@@ -7,6 +7,8 @@ Rails.application.routes.draw do
     resources :genres, only: [:index, :create, :edit, :update]
     resources :items
     resources :customers, only: [:index, :show, :edit, :update]
+    resources :orders, only: [:show, :update]
+    resources :order_ditails, only: [:update]
     root to: "homes#top"
  end
 

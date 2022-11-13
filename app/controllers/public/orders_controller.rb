@@ -25,7 +25,11 @@ class Public::OrdersController < ApplicationController
   end
 
   def show
-
+   @order = Order.find(params[:id])
+   @total = 0
+   @order.order_ditails.each do |ditail|
+   @total += ditail.item.with_tax_price * ditail.amount
+   end
   end
 
   def complete
@@ -36,14 +40,14 @@ class Public::OrdersController < ApplicationController
     @order = Order.new(order_params)
     @address = Address.find(params[:order][:address_id])
     @order.delivery_charge = 800
-   if params[:order][:select_address] ='0'
+   if params[:order][:select_address] =='0'
     @order.postal_code =  current_customer.postal_code
     @order.address =  current_customer.address
     @order.name = current_customer.last_name + current_customer.first_name
-   elsif params[:order][:select_address] ='1'
+   elsif params[:order][:select_address] =='1'
     @order.postal_code =  @address.postal_code
     @order.address =  @address.address
-     @order.name = @address.name
+    @order.name = @address.name
    end
   end
 

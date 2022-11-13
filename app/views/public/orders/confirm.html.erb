@@ -16,8 +16,9 @@
           <td><%= image_tag cart_item.item.get_image(50, 50) %>
               <%= cart_item.item.name %></td>
           <td><%= cart_item.item.with_tax_price %></td>
-          <td><%= cart_item.amount%> </td>
-          <td><%= cart_item.subtotal%></td>
+          <td><%= cart_item.amount %></td>
+          <td><%= cart_item.subtotal %></td>
+          <% total += cart_item.item.with_tax_price * cart_item.amount %>
        </tr>
        <% end %>
      </tbody>
@@ -32,17 +33,23 @@
       </tr>
       <tr>
        <td>商品合計</td>
-       <td></td>
+       <td><%= total %></td>
       </tr>
       <tr>
        <td>請求金額</td>
-       <td></td>
+       <td><%= total + @order.delivery_charge %></td>
       </tr>
      </tbody>
     </table>
    </div>
   </div>
-   <h5>支払い方法</h5>
+   <h4>支払い方法</h4>
+    <%=Order.payment_methods_i18n[@order.payment_method] %>
+
+   <h4>お届け先</h4>
+   〒<%= @order.postal_code %>
+   <%= @order.address %>
+   <%= @order.name %>
 
    <%= form_with model: @order, url: orders_path, method: :post do |f| %>
     <div class="text-center">
@@ -53,6 +60,6 @@
      <%= f.hidden_field :total_payment, :value => total %>
      <%= f.hidden_field :payment_method, :value => @order.payment_method  %>
      <%= f.submit '注文を確定する',class:"btn btn-success" %>
-   <% end %>
     </div>
- </div>
+   <% end %>
+</div>
