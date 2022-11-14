@@ -1,0 +1,55 @@
+<h4>注文履歴詳細</h4>
+<div class="container">
+ <div class="row">
+  <div class="col-md-12">
+
+   <h5>購入者</h5>
+    <%= @order.customer.first_name %>
+    <%= @order.customer.last_name %>
+
+    <h5>注文日</h5>
+     <%= @order.created_at.strftime('%Y/%m/%d') %>
+
+    <h5>お届け先</h5>
+     〒<%= @order.postal_code %>
+     <%= @order.address %>
+     <%= @order.name %>
+
+    <h5>支払方法</h5>
+     <%=Order.payment_methods_i18n[@order.payment_method] %>
+
+    <h5>注文ステータス</h5>
+
+
+
+
+   </div>
+   <div class="col-md-8 offset-md-1">
+    <table class="table table-hover table-inverse">
+     <thead>
+      <tr>
+       <th>商品名</th>
+       <th>単価(税込)</th>
+       <th>数量</th>
+       <th>小計</th>
+       <th>製作ステータス</th>
+      </tr>
+     </thead>
+      <% @order.order_ditails.each do |ditail| %>
+     <tbody>
+        <tr>
+          <td><%= ditail.item.name %></td>
+          <td><%= ditail.item.with_tax_price %></td>
+          <td><%= ditail.amount %></td>
+          <td><%= ditail.item.with_tax_price * ditail.amount %></td>
+          <td>
+           
+          </td>
+         </tr>
+         <% end %>
+         
+     </tbody>
+    </table>
+   </div>
+  </div>
+</div>
