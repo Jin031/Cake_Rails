@@ -1,6 +1,6 @@
 <div class="container">
  <div class="row">
-  <div class="col-md-12">
+  <div class="px-3 mx-auto">
    <h4>管理者ログイン</h4>
 
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
@@ -15,7 +15,7 @@
   </div>
 
   <div class="actions">
-    <%= f.submit "ログイン" %>
+    <%= f.submit "ログイン",class:"btn btn-primary" %>
   </div>
 <% end %>
 

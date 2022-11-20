@@ -1,0 +1,4 @@
+ <%= form_with model: @order_ditail, url: admin_order_ditail_path(@order_ditail.id), method: :patch do |f| %>
+ <%= f.select :making_status, OrderDitails.making_statuses_i18n.keys.map{|k| [I18n.t("enums.order_ditail.making_status.#{k}"), k]} %>
+ <%= f.submit "更新",class:"btn btn-success" %>
+ <% end %>

@@ -16,12 +16,13 @@
      <%= @order.name %>
 
     <h5>支払方法</h5>
-     <%=Order.payment_methods_i18n[@order.payment_method] %>
+     <%= Order.payment_methods_i18n[@order.payment_method] %>
 
     <h5>注文ステータス</h5>
-
-
-
+     <%= form_with model: @order, url: admin_order_path(@order.id), method: :patch do |f| %>
+     <%= f.select :status, Order.statuses_i18n.keys.map{|k| [I18n.t("enums.order.status.#{k}"), k]} %>
+     <%= f.submit "更新",class:"btn btn-success" %>
+     <% end %>
 
    </div>
    <div class="col-md-8 offset-md-1">
@@ -35,6 +36,7 @@
        <th>製作ステータス</th>
       </tr>
      </thead>
+      <%= form_with model: @order_ditail, url: admin_order_ditail_path(@order_ditail.id), method: :patch do |f| %>
       <% @order.order_ditails.each do |ditail| %>
      <tbody>
         <tr>
@@ -43,13 +45,16 @@
           <td><%= ditail.amount %></td>
           <td><%= ditail.item.with_tax_price * ditail.amount %></td>
           <td>
-           
+           <%= f.select :making_status, OrderDitail.making_statuses_i18n.keys.map{|k| [I18n.t("enums.order_ditail.making_status.#{k}"), k]} %>
+           <%= f.submit "更新",class:"btn btn-success" %>
+           <% end %>
           </td>
          </tr>
          <% end %>
-         
      </tbody>
     </table>
+
+
    </div>
   </div>
 </div>

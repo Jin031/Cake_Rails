@@ -23,7 +23,7 @@
         </tr>
         <tr>
           <th>ステータス</th>
-          <td><%= @order.status %></td>
+          <td><%= Order.statuses_i18n[@order.status] %></td>
        </tr>
      </tbody>
     </table>
