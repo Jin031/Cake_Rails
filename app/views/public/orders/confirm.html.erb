@@ -1,4 +1,4 @@
-<h4>注文情報確認</h4>
+<h4 class= "mt-4 mb-1">注文情報確認</h4>
 <div class="container">
  <div class="row">
   <div class="col-md-9">
@@ -43,13 +43,18 @@
     </table>
    </div>
   </div>
-   <h4>支払い方法</h4>
-    <%=Order.payment_methods_i18n[@order.payment_method] %>
 
-   <h4>お届け先</h4>
+  <div class='form-group row'>
+   <h5 class= "mr-4">支払い方法</h5>
+    <%=Order.payment_methods_i18n[@order.payment_method] %>
+  </div>
+
+  <div class='form-group row'>
+   <h5 class= "mr-4">お届け先</h5>
    〒<%= @order.postal_code %>
    <%= @order.address %>
    <%= @order.name %>
+  </div>
 
    <%= form_with model: @order, url: orders_path, method: :post do |f| %>
     <div class="text-center">

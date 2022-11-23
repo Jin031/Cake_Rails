@@ -1,4 +1,5 @@
 class Admin::OrderDitailsController < ApplicationController
+   before_action :authenticate_admin!
   def update
    @order_ditail = OrderDitail.find(params[:id])
    @order_ditail.update(order_ditail_params)
