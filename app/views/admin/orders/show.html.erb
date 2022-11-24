@@ -1,62 +1,96 @@
 <div class="container">
- <div class="row">
-  <div class="col-md-12">
+ <div class="col-md-12">
    <h4 class= "mt-3 mb-2">注文履歴詳細</h4>
 
-
-   <h5>購入者</h5>
-    <%= @order.customer.first_name %>
-    <%= @order.customer.last_name %>
-
-    <h5>注文日</h5>
-     <%= @order.created_at.strftime('%Y/%m/%d') %>
-
-    <h5>お届け先</h5>
-     〒<%= @order.postal_code %>
+   <div class="row">
+    <div class="col-md-2 mb-2">
+     <h5>購入者</h5>
+    </div>
+    <div class="col-md-5">
+      <%= @order.customer.first_name %>
+      <%= @order.customer.last_name %>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-2 mb-2">
+     <h5>注文日</h5>
+    </div>
+    <div class="col-md-5">
+      <%= @order.created_at.strftime('%Y/%m/%d') %>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-2 mb-2">
+      <h5>お届け先</h5>
+    </div>
+    <div class="col-md-5">
+       〒<%= @order.postal_code %>
      <%= @order.address %>
      <%= @order.name %>
-
-    <h5>支払方法</h5>
-     <%= Order.payment_methods_i18n[@order.payment_method] %>
-
-    <h5>注文ステータス</h5>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-2 mb-2">
+      <h5>支払方法</h5>
+    </div>
+    <div class="col-md-5">
+       <%= Order.payment_methods_i18n[@order.payment_method] %>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-2 mb-2">
+      <h5>注文ステータス</h5>
+    </div>
+    <div class="col-md-5">
      <%= form_with model: @order, url: admin_order_path(@order.id), method: :patch do |f| %>
      <%= f.select :status, Order.statuses_i18n.keys.map{|k| [I18n.t("enums.order.status.#{k}"), k]} %>
      <%= f.submit "更新",class:"btn btn-success" %>
      <% end %>
-
-   </div>
-   <div class="col-md-8 offset-md-1">
-    <table class="table table-hover table-inverse">
-     <thead>
-      <tr>
-       <th>商品名</th>
-       <th>単価(税込)</th>
-       <th>数量</th>
-       <th>小計</th>
-       <th>製作ステータス</th>
-      </tr>
-     </thead>
-      <%= form_with model: @order_ditail, url: admin_order_ditail_path(@order_ditail.id), method: :patch do |f| %>
-      <% @order.order_ditails.each do |ditail| %>
-     <tbody>
-        <tr>
-          <td><%= ditail.item.name %></td>
-          <td><%= ditail.item.with_tax_price %></td>
-          <td><%= ditail.amount %></td>
-          <td><%= ditail.item.with_tax_price * ditail.amount %></td>
-          <td>
-           <%= f.select :making_status, OrderDitail.making_statuses_i18n.keys.map{|k| [I18n.t("enums.order_ditail.making_status.#{k}"), k]} %>
-           <%= f.submit "更新",class:"btn btn-success" %>
-           <% end %>
-          </td>
-         </tr>
-         <% end %>
-         
-     </tbody>
-    </table>
-
-
+    </div>
    </div>
   </div>
+  <div class="mt-4 row">
+   <table class="table col-md-8">
+    <thead>
+     <tr>
+      <th>商品名</th>
+      <th>単価(税込)</th>
+      <th>数量</th>
+      <th>小計</th>
+      <th>製作ステータス</th>
+     </tr>
+    </thead>
+      <% @order.order_ditails.each do |ditail| %>
+    <tbody>
+      <tr>
+       <td><%= ditail.item.name %></td>
+       <td><%= ditail.item.with_tax_price %></td>
+       <td><%= ditail.amount %></td>
+       <td><%= ditail.item.with_tax_price * ditail.amount %></td>
+       <td>
+        <%= form_with model: ditail, url: admin_order_ditail_path(ditail.id), method: :patch do |f| %>
+        <%= f.select :making_status, OrderDitail.making_statuses_i18n.keys.map{|k| [I18n.t("enums.order_ditail.making_status.#{k}"), k]} %>
+        <%= f.submit "更新",class:"btn btn-success" %>
+        <% end %>
+       </td>
+         <% @total += ditail.item.with_tax_price * ditail.amount %>
+      </tr>
+        <% end %>
+     </tbody>
+    </table>
+    <table class="col-md-2 offset-md-1 mt-auto"style='height:100px;'>
+     <tr>
+      <th>商品金額</th>
+      <td><%= @total %>円</td>
+     </tr>
+     <tr>
+      <th>送料</th>
+      <td><%= @order.delivery_charge %>円</td>
+     </tr>
+     <tr>
+      <th>請求金額合計</th>
+      <td><%= @total + @order.delivery_charge %>円</td>
+     </tr>
+    </table>
+ </div>
 </div>

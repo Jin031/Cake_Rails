@@ -2,8 +2,8 @@ class Admin::OrdersController < ApplicationController
   before_action :authenticate_admin!
   def show
    @order = Order.find(params[:id])
-   @order_ditail = OrderDitail.find(params[:id])
-
+   @order_ditails = @order.order_ditails
+   @total = 0
   end
 
   def update

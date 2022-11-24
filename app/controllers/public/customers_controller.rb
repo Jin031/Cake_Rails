@@ -11,7 +11,7 @@ class Public::CustomersController < ApplicationController
  def update
   @customer = current_customer
   @customer.update(customer_params)
-  redirect_to root_path
+  redirect_to customers_path
  end
 
  def withdraw
