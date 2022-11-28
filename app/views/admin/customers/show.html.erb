@@ -70,9 +70,9 @@
     会員ステータス
     </div>
     <div class="col-md-3 my-1 row">
-      <% if @customer.is_deleted == true %>
+      <% if @customer.is_deleted == false %>
           有効
-      <% elsif @customer.is_deleted == false %>
+      <% elsif @customer.is_deleted == true %>
          退会
      <% end %>
     </div>
